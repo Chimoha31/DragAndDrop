@@ -61,15 +61,15 @@ function App() {
   return (
     <div>
       <DragDropContext onDragEnd={onDragEnd}> {/* Dragし終わった後に位置を変えてほしい時に使うonDrugEnd */}
-        <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div
+        <Droppable droppableId="droppable"> 
+          {(provided, snapshot) => (  //<Droppable>の中は絶対に{(provided) => ()}関数でないといけない。
+            <div            //最初の<div>の中に特殊なプロパティを設定。決まり文句。
               {...provided.droppableProps}
-              ref={provided.innerRef}
+              ref={provided.innerRef}   //dragしている要素以外の要素(カード)の制御をしてくれている。
               style={getListStyle(snapshot.isDraggingOver)} //dragしている間、cssのstyleを変える(背景色を変えたり)
             >
               {items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
+                <Draggable key={item.id} draggableId={item.id} index={index}> {/* index={index}必須mapの第二引数にindex付ける事忘れないこと。draggableID={}は数字ではなく、文字列である必要がある！注意！*/} 
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
